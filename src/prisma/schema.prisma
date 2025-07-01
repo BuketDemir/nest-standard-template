@@ -1,0 +1,31 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["filteredRelationCount"]
+  binaryTargets   = ["native", "debian-openssl-1.1.x"]
+}
+
+//datasource db {
+//  provider     = "postgresql"
+//  url          = env("PG_USER_URL")
+//  relationMode = "foreignKeys"
+//}
+
+
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_DSN")
+}
+
+model User {
+  //id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid //postgresql
+  id  String  @id @default(auto()) @map("_id") @db.ObjectId // mongo
+  name String?
+  email String?
+  password String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+
